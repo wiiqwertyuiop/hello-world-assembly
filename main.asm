@@ -9,6 +9,13 @@ section .text
 STD_OUTPUT_HANDLE: EQU -11
 
 _main:
+
+    ; Align the stack on a 16-byte boundary
+    and     rsp, -16
+    
+    push    rbp
+    mov     rbp, rsp
+
     mov rcx, STD_OUTPUT_HANDLE
     call GetStdHandle
 
@@ -19,6 +26,9 @@ _main:
     push 0          ; lpReserved
     call WriteConsoleA
 
+    mov     rsp, rbp
+    pop     rbp
+    
     mov rcx, 0
     call ExitProcess
 
