@@ -9,7 +9,7 @@ section .text
 STD_OUTPUT_HANDLE: EQU -11
 
 main:
-    sub rsp, 40+8    ; Allocate space for parameters and align stack
+    sub rsp, 40    ; Allocate space for parameters
 
     mov rcx, DWORD STD_OUTPUT_HANDLE
     call GetStdHandle
@@ -24,7 +24,7 @@ main:
     mov rcx, len     ; Check all chars were written correctly
     sub rcx, [rsp+24]; Exit code should be 0
 
-    add rsp, 40+8    ; Clean up stack
+    add rsp, 40    ; Clean up stack
     call ExitProcess
 
 msg:
