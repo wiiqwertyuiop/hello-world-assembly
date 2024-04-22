@@ -11,18 +11,18 @@ STD_OUTPUT_HANDLE: EQU -11
 main:
     sub rsp, 40+8    ; Allocate space for parameters and align stack
 
-    mov rcx, STD_OUTPUT_HANDLE
+    mov rcx, DWORD STD_OUTPUT_HANDLE
     call GetStdHandle
 
     push 0           ; lpReserved
-    lea r9, [rsp+16] ; lpNumberOfCharsWritten
+    lea r9, [rsp+8]  ; lpNumberOfCharsWritten
     mov r8, len      ; nNumberOfCharsToWrite
     mov rdx, msg     ; *lpBuffer
     mov rcx, rax     ; hConsoleOutput
     call WriteConsoleA
 
     mov rcx, len     ; Check all chars were written correctly
-    sub rcx, [rsp+16]; Exit code should be 0
+    sub rcx, [rsp+8]; Exit code should be 0
 
     add rsp, 40+8    ; Clean up stack
     call ExitProcess
