@@ -22,7 +22,7 @@ main:
     call WriteConsoleA
 
     mov rcx, len     ; Check all chars were written correctly
-    sub rcx, [rsp+8]; Exit code should be 0
+    sub rcx, [rsp+8] ; Exit code should be 0
 
     add rsp, 40+8    ; Clean up stack
     call ExitProcess
