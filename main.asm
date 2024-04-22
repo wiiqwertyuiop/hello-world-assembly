@@ -9,20 +9,22 @@ section .text
 STD_OUTPUT_HANDLE: EQU -11
 
 main:
-    sub rsp, 40+8   ; Allocate space for parameters and align stack
+    sub rsp, 40+8    ; Allocate space for parameters and align stack
 
     mov rcx, STD_OUTPUT_HANDLE
     call GetStdHandle
 
-    push 0          ; lpReserved
-    mov r9, 0       ; lpNumberOfCharsWritten
-    mov r8, len     ; nNumberOfCharsToWrite
-    mov rdx, msg    ; *lpBuffer
-    mov rcx, rax    ; hConsoleOutput
+    push 0           ; lpReserved
+    lea r9, [rsp+16] ; lpNumberOfCharsWritten
+    mov r8, len      ; nNumberOfCharsToWrite
+    mov rdx, msg     ; *lpBuffer
+    mov rcx, rax     ; hConsoleOutput
     call WriteConsoleA
 
+    mov rcx, len     ; Check all chars were written correctly
+    sub rcx, [rsp+16]; Exit code should be 0
+
     add rsp, 40+8   ; Clean up stack
-    xor rcx, rcx    ; Exit code 0
     call ExitProcess
 
 msg:
