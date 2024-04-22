@@ -9,8 +9,7 @@ section .text
 STD_OUTPUT_HANDLE: EQU -11
 
 main:
-    and rsp, -16    ; Align the stack on a 16-byte boundary
-    sub rsp, 40     ; Allocate space for parameters
+    sub rsp, 40+8   ; Allocate space for parameters and align stack
 
     mov rcx, STD_OUTPUT_HANDLE
     call GetStdHandle
@@ -22,7 +21,7 @@ main:
     mov rcx, rax    ; hConsoleOutput
     call WriteConsoleA
 
-    add rsp, 40     ; Clean up stack
+    add rsp, 40+8   ; Clean up stack
     mov rcx, 0
     call ExitProcess
 
