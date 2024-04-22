@@ -22,7 +22,7 @@ main:
     call WriteConsoleA
 
     add rsp, 40+8   ; Clean up stack
-    mov rcx, 0
+    xor rcx, rcx    ; Exit code 0
     call ExitProcess
 
 msg:
