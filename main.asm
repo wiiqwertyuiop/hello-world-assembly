@@ -14,15 +14,15 @@ main:
     mov rcx, DWORD STD_OUTPUT_HANDLE
     call GetStdHandle
 
-    push 0           ; lpReserved
-    lea r9, [rsp+8]  ; lpNumberOfCharsWritten
+    mov QWORD [rsp+32], 0  ; lpReserved
+    lea r9, [rsp+24] ; lpNumberOfCharsWritten
     mov r8, len      ; nNumberOfCharsToWrite
     mov rdx, msg     ; *lpBuffer
     mov rcx, rax     ; hConsoleOutput
     call WriteConsoleA
 
     mov rcx, len     ; Check all chars were written correctly
-    sub rcx, [rsp+8] ; Exit code should be 0
+    sub rcx, [rsp+24]; Exit code should be 0
 
     add rsp, 40+8    ; Clean up stack
     call ExitProcess
